@@ -1,0 +1,17 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 546 556" width="546" height="556">
+	<style>
+		.s0 { fill: #40408d;stroke: #070c3b;stroke-linecap: round;stroke-linejoin: round;stroke-width: 7 } 
+		.s1 { fill: #319931;stroke: #054c05;stroke-linecap: round;stroke-linejoin: round;stroke-width: 7 } 
+		.s2 { fill: #ce2929;stroke: #580707;stroke-linecap: round;stroke-linejoin: round;stroke-width: 7 } 
+	</style>
+	<filter id="f0">
+		<feFlood flood-color="#000000" flood-opacity="1" />
+		<feBlend mode="normal" in2="SourceGraphic"/>
+		<feComposite in2="SourceAlpha" operator="in" />
+	</filter>
+	<g id="Pasta 1" filter="url(#f0)">
+		<path id="Forma 1" class="s0" d="m266.6 220.04v331.56l-261.6-99.76v-331.56zm0 0v331.55l-261.6-99.75v-331.56z"/>
+		<path id="Forma 1 copy" class="s1" d="m279.55 220.04v331.56l261.6-99.76v-331.56zm0 0v331.55l261.6-99.75v-331.56z"/>
+		<path id="Forma 2" fill-rule="evenodd" class="s2" d="m532.29 106.86l-259.24 101.86-263.96-101.86 259.24-101.86z"/>
+	</g>
+</svg>
