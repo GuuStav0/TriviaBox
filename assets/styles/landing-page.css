@@ -1,0 +1,43 @@
+:root
+{
+    --snow-white: #f6f8ff;
+}
+
+*
+{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif, Arial;
+}
+
+.page-header
+{
+    width: 100%;
+    height: 16vh;
+    padding: 15px;  
+    background-color: var(--snow-white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page-header h1
+{
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.caroussel_img
+{
+    /*border: 1px solid red;*/
+    width: 100%;
+    max-height: 75vh;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.landing-content
+{
+    background-color: var(--snow-white);
+}
