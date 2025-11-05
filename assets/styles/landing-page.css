@@ -1,6 +1,11 @@
 :root
 {
     --snow-white: #f6f8ff;
+    --dark-navy: #062241;
+    --slate-gray: #475569;
+    --blue-sky: #2b6df6;
+    --light-blue: #85c1ff;
+    --dark-blue: #213a9b;
 }
 
 *
@@ -9,6 +14,11 @@
     margin: 0;
     box-sizing: border-box;
     font-family: sans-serif, Arial;
+}
+
+body
+{
+    background-color: var(--snow-white);
 }
 
 .page-header
@@ -22,22 +32,337 @@
     justify-content: space-between;
 }
 
+.logo-container
+{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    pointer-events: none;
+}
+
+.logo
+{
+    height: 50px;
+}
+
 .page-header h1
 {
     font-size: 2rem;
     font-weight: 600;
+    padding: 0;
+    margin: 0;
 }
 
 .caroussel_img
 {
-    /*border: 1px solid red;*/
     width: 100%;
     max-height: 75vh;
     aspect-ratio: 16 / 9;
     object-fit: cover;
 }
 
-.landing-content
+.carousel-inner 
 {
-    background-color: var(--snow-white);
+    position: relative;
+}
+
+.caroussel-text 
+{
+    background-color: rgba(0,0,0,0.4);
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: white;
+    padding: 1rem;
+    gap: 0.5rem;
+    pointer-events: none;
+}
+
+.caroussel-text h2,
+.caroussel-text h5 
+{
+    max-width: 30rem;
+    pointer-events: auto;
+}
+
+.caroussel-text h2 
+{
+    text-align: left;
+    font-size: clamp(1.5rem, 3.2vw, 2.5rem);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.6);
+}
+
+.caroussel-text h5
+{
+    text-align: justify;
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+    text-shadow: 0 3px 8px rgba(0,0,0,0.55);
+}
+
+.landing-content 
+{
+    background-color: #fff;
+    padding: 2.25rem 0 2.75rem;
+}
+
+.landing-content h2 
+{
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    color: var(--dark-navy);
+    text-align: center;
+    margin: 0 0 0.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.landing-content p 
+{
+    max-width: 920px;
+    margin: 0 auto 1.5rem;
+    color: var(--slate-gray);
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: center;
+}
+
+@media (min-width: 900px) 
+{
+    .landing-content 
+    {
+        padding: 3rem 0 3.5rem;
+    }
+    .landing-content h2 
+    {
+        font-size: 2.25rem;
+    }
+}
+
+.start-playing 
+{
+    background: linear-gradient(135deg, var(--blue-sky) 0%, var(--dark-blue) 100%);
+    color: #fff;
+    padding: 3.5rem 0 4.5rem;
+    text-align: center;
+}
+
+.start-playing .start-container 
+{
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.start-playing h2 
+{
+    font-size: clamp(1.6rem, 3.8vw, 3rem);
+    margin: 0 0 0.75rem;
+    font-weight: 800;
+    line-height: 1.05;
+    text-shadow: 0 6px 18px rgba(11,36,65,0.08);
+}
+
+.start-playing .start-lead 
+{
+    margin: 0 0 1.75rem;
+    color: rgba(255,255,255,0.9);
+    font-size: 1.05rem;
+}
+
+.start-cta-wrap 
+{ 
+    display: flex; 
+    justify-content: center; 
+}
+
+.start-cta 
+{
+    display: inline-block;
+    background: #ffffff;
+    color: var(--dark-blue);
+    padding: 0.9rem 1.6rem;
+    border-radius: 8px;
+    font-weight: 700;
+    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.18);
+    text-decoration: none;
+}
+
+.start-cta:hover 
+{ 
+    transform: translateY(-2px);
+    background: #000;
+    box-shadow: 0 12px 36px rgba(15,23,42,0.2); 
+}
+
+@media (max-width: 540px) {
+    .start-playing { padding: 2.5rem 0; }
+    .start-playing h2 { font-size: 1.6rem; }
+    .start-playing .start-lead { font-size: 0.96rem; }
+    .start-cta { padding: 0.7rem 1.1rem; }
+}
+
+.description-cards 
+{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    align-items: stretch;
+}
+
+.description-cards .content-item 
+{
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+    border: 2px solid rgba(0,0,0,0.09);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.description-cards .content-item h3 
+{
+    font-size: 1.15rem;
+    margin: 0;
+    color: #0b2545;
+}
+
+.description-cards .content-item p 
+{
+    margin: 0;
+    color: #334155;
+    line-height: 1.45;
+    font-size: 0.95rem;
+}
+
+.description-cards .content-item:hover 
+{
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+}
+
+@media (max-width: 600px) 
+{
+    .description-cards 
+    {
+        gap: 0.9rem;
+    }
+    .description-cards .content-item 
+    {
+        padding: 1rem;
+    }
+}
+
+.landing-explain 
+{
+    padding: 3.5rem 0 4.5rem;
+}
+
+.landing-explain .explain-container 
+{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+.landing-explain h2 
+{
+    font-size: 2rem;
+    margin: 0 0 0.5rem;
+    color: #0b2545;
+}
+
+.landing-explain .lead 
+{
+    margin: 0 0 2rem;
+    color: #64748b;
+}
+
+.explain-steps 
+{
+    position: relative;
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.explain-steps::before 
+{
+    content: '';
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    top: 44px;
+    height: 2px;
+    background: rgba(15, 23, 42, 0.06);
+    z-index: 1;
+}
+
+.step 
+{
+    position: relative;
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0.4rem;
+    z-index: 2;
+}
+
+.step-badge 
+{
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--blue-sky);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 6px 18px rgba(43,109,246,0.18);
+}
+
+.step-title 
+{
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+    color: #0b2545;
+}
+
+.step-desc 
+{
+    margin: 0;
+    color: #64748b;
+    max-width: 260px;
+    font-size: 0.95rem;
+    line-height: 1.45;
+}
+
+@media (max-width: 880px) 
+{
+    .explain-steps::before { left: 8%; right: 8%; top: 42px; }
+    .step-desc { max-width: 220px; }
+}
+
+@media (max-width: 640px) 
+{
+    .explain-steps { flex-direction: column; gap: 1.25rem; align-items: center; }
+    .explain-steps::before { display: none; }
+    .step-desc { max-width: 100%; text-align: center; }
+    .step-title { text-align: center; }
 }
