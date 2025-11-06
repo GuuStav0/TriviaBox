@@ -18,8 +18,8 @@
                 <h1>TriviaBox</h1>
             </div>
             <div class="auth-buttons">
-                <button type="button" class="btn btn-dark">Login</button>
-                <button type="button" class="btn btn-primary">Sign-up</button>
+                <button type="button" class="btn btn-dark" onclick="location.href='./assets/data/pages/login.php'">Login</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='./assets/data/pages/signup.php'">Sign-up</button>
             </div>
         </header>
         <div id="LandingCarousel" class="carousel slide w-100" data-bs-ride="carousel">
@@ -97,7 +97,7 @@
                 <h2 id="start-playing-title">Pronto para Testar Seu Conhecimento?</h2>
                 <p class="start-lead">Junte-se a comunidade de jogadores que já estão desfrutando da melhor experiência de quiz online.</p>
                 <div class="start-cta-wrap">
-                    <a class="btn start-cta" href="#">Comece a Jogar Gratuitamente</a>
+                    <a class="btn start-cta" href="./assets/data/pages/signup.php">Comece a Jogar Gratuitamente</a>
                 </div>
             </div>
         </section>
