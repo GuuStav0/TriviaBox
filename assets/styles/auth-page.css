@@ -17,6 +17,14 @@
   font-family: sans-serif, Arial;
 }
 
+body.recovery-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
 body.auth-page {
   background: linear-gradient(
     180deg,
@@ -172,4 +180,13 @@ body.auth-page {
     padding-left: 3.25rem;
     padding-right: 6.25rem;
   }
+}
+
+.recovery-container {
+  background-color: var(--snow-white);
+  padding: 2rem;
+  border-radius: 3px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
 }
