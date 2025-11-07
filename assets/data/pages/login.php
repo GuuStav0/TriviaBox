@@ -33,6 +33,7 @@
                     </div>
                 </form>
                 <p class="mt-3">Não tem uma conta? <a href="./signup.php">Cadastre-se.</a></p>
+                <p class="">Não lembra a Senha? <a href="./recovery.php">Recuperar Senha.</a></p>
             </div>
         </section>
     </main>
