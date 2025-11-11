@@ -7,7 +7,7 @@
     <title>TriviaBox - Acesse Sua Conta</title>
     <link rel="stylesheet" href="../../styles/bootstrap_styles/bootstrap.css">
     <link rel="stylesheet" href="../../styles/auth-page.css">
-    <link rel="shortcut icon" href="../images/LogoWhite.svg" type="image/x-icon">
+    <link id="favicon" rel="shortcut icon" href="../images/LogoWhite.svg" type="image/x-icon">
 </head>
 
 <body class="auth-page">
@@ -36,6 +36,7 @@
                     </div>
                 </form>
                 <p class="mt-3">Não tem uma conta? <a href="./signup.php">Cadastre-se.</a></p>
+                <p class="">Não lembra a Senha? <a href="./recovery.php">Recuperar Senha.</a></p>
             </div>
         </section>
     </main>
@@ -70,6 +71,8 @@
         });
     });
 </script>
+<script src="./../../scripts/bootstrap_scripts/bootstrap.bundle.js"></script>
 <script src="https://kit.fontawesome.com/02f69001e4.js" crossorigin="anonymous"></script>
+<script src="./../../scripts/matchMedia.js"></script>
 
 </html>

@@ -7,7 +7,7 @@
     <title>TriviaBox</title>
     <link rel="stylesheet" href="./assets/styles/bootstrap_styles/bootstrap.css">
     <link rel="stylesheet" href="./assets/styles/landing-page.css">
-    <link rel="shortcut icon" href="./assets/data/images/LogoWhite.svg" type="image/x-icon">
+    <link id="favicon" rel="shortcut icon" href="./assets/data/images/LogoWhite.svg" type="image/x-icon">
 </head>
 
 <body>
@@ -137,7 +137,8 @@
         </footer>
     </main>
 </body>
-<script src="./assets/scripts/bootstrap_scripts/bootstrap.bundle.js"></script>
 <script src="https://kit.fontawesome.com/02f69001e4.js" crossorigin="anonymous"></script>
+<script src="./assets/scripts/bootstrap_scripts/bootstrap.bundle.js"></script>
+<script src="./assets/scripts/matchMediaIndx.js"></script>
 
 </html>
