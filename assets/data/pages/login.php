@@ -14,6 +14,9 @@
     <main>
         <section class="auth-container">
             <div class="auth-card">
+                <div class="text-center mb-3 auth-logo">
+                    <img src="../images/LogoBlack.svg" alt="TriviaBox logo" style="height:64px; max-width:100%; pointer-events: none;" />
+                </div>
                 <h2>Entrar</h2>
                 <hr class="divisor">
                 <form action="#" method="POST">
