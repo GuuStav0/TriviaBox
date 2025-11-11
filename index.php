@@ -137,8 +137,8 @@
         </footer>
     </main>
 </body>
-<script src="./assets/scripts/bootstrap_scripts/bootstrap.bundle.js"></script>
 <script src="https://kit.fontawesome.com/02f69001e4.js" crossorigin="anonymous"></script>
+<script src="./assets/scripts/bootstrap_scripts/bootstrap.bundle.js"></script>
 <script src="./assets/scripts/matchMediaIndx.js"></script>
 
 </html>
