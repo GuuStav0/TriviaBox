@@ -1,0 +1,18 @@
+:root {
+    --auth-gradient-start: #f6f8ff;
+    --auth-gradient-mid: #eef6ff;
+    --auth-gradient-end: #ffffff;
+    --snow-white: #f6f8ff;
+    --dark-navy: #062241;
+    --slate-gray: #475569;
+    --blue-sky: #2b6df6;
+    --light-blue: #85c1ff;
+    --dark-blue: #213a9b;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif, Arial;
+}
