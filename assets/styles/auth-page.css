@@ -17,33 +17,71 @@
   font-family: sans-serif, Arial;
 }
 
+html,
+body,
+main {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; 
+}
+
+main {
+  display: flex;
+  height: 100vh; 
+  width: 100vw;
+}
+
 body.auth-page {
-  background: linear-gradient(
-    180deg,
-    var(--light-blue) 0%,
-    var(--blue-sky) 50%,
-    var(--dark-blue) 100%
-  );
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.auth-center {
-  min-height: calc(100vh - 16vh);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
+#carouselExampleIndicators {
+  width: 58%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    var(--light-blue) 0%,
+    var(--blue-sky) 50%,
+    var(--dark-blue) 100%
+  );
 }
+
+#carouselExampleIndicators .carousel-inner,
+#carouselExampleIndicators .carousel-item {
+  height: 100%;
+}
+
+#carouselExampleIndicators .carousel-item img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.auth-container {
+  width: 42%;
+  height: 100vh;
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  padding: 2.5rem;
+  background-color: var(--snow-white); 
+  overflow-y: auto; 
+}
+
 
 .auth-card {
   background: var(--snow-white);
   border-radius: 12px;
   box-shadow: 0 12px 36px rgba(11, 36, 65, 0.08);
   padding: 2rem;
-  max-width: 460px;
+  max-width: 460px; 
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .auth-card h2 {
@@ -63,42 +101,33 @@ body.auth-page {
   opacity: 1;
 }
 
-.auth-container {
-  min-height: 100vh;
-  display: flex;
-  align-items: stretch;
-  justify-content: flex-end;
-  padding: 0;
-}
-
-.auth-card {
-  width: 42%;
-  max-width: 560px;
-  height: 100vh;
-  border-radius: 0;
-  padding: 2.5rem;
-  box-shadow: 0 18px 46px rgba(11, 36, 65, 0.12);
-  overflow: auto;
-}
-
-.auth-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
-}
-
 @media (max-width: 900px) {
-  .auth-container {
-    justify-content: center;
+  main {
+    flex-direction: column; 
+    overflow-y: auto;
   }
-  .auth-card {
+
+  
+  #carouselExampleIndicators {
     width: 100%;
-    max-width: 720px;
+    height: 300px; 
+  }
+
+  .auth-container {
+    width: 100%;
     height: auto;
+    min-height: 100vh; 
     justify-content: flex-start;
   }
+
+  .auth-card {
+    width: 90%;
+    max-width: 720px;
+    margin: 0 auto; 
+    box-shadow: none; 
+  }
 }
+
 
 .input-with-icon {
   position: relative;
