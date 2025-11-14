@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./../../styles/bootstrap_styles/bootstrap.css">
     <link rel="stylesheet" href="./../../styles/home-page.css">
     <link id="favicon" rel="shortcut icon" href="./../images/LogoWhite.svg" type="image/x-icon">
+    <link rel="stylesheet" href="./../../data/images">
 </head>
 
 <body>
@@ -30,13 +31,13 @@
                         tópicos. De curiosidades a quebra-cabeças, temos tudo!</h5>
                 </div>
                 <div class="carousel-item active z-0">
-                    <img src="https://placehold.co/1920x1080" class="caroussel_img d-block" alt="...">
+                    <img src="../images/Tecnologia.jpg" class="caroussel_img d-block" alt="...">
                 </div>
                 <div class="carousel-item z-0">
-                    <img src="https://placehold.co/1920x1080" class="caroussel_img d-block" alt="...">
+                    <img src="../images/Sabedoria e Conhecimento Clássico.jpg" class="caroussel_img d-block" alt="...">
                 </div>
                 <div class="carousel-item z-0">
-                    <img src="https://placehold.co/1920x1080" class="caroussel_img d-block" alt="...">
+                    <img src="../images/Desafio do Conhecimento.jpg" class="caroussel_img d-block" alt="...">
                 </div>
             </div>
         </div>
@@ -49,38 +50,39 @@
                     <div class="featured-track d-flex gap-3 py-2">
                         <!-- featured cards -->
                         <div class="card featured-card">
-                            <img src="https://placehold.co/320x180" class="card-img-top" alt="Destaque 1">
+                            <img src="../images/Desafio do Conhecimento.jpg" class="card-img-top" alt="Desafio do Conhecimento">
                             <div class="card-body p-2">
-                                <h6 class="card-title mb-1">Quiz em Destaque 1</h6>
-                                <small class="text-muted">História</small>
+                                <h6 class="card-title mb-1">Desafio do Conhecimento</h6>
+                                <small class="text-muted">Cultura Geral</small>
                             </div>
                         </div>
                         <div class="card featured-card">
-                            <img src="https://placehold.co/320x180" class="card-img-top" alt="Destaque 2">
+                            <img src="../images/Onde Está o erro.jpg" class="card-img-top" alt="Onde Está o Erro?">
                             <div class="card-body p-2">
-                                <h6 class="card-title mb-1">Quiz em Destaque 2</h6>
-                                <small class="text-muted">Ciência</small>
+                                <h6 class="card-title mb-1">Onde Está o Erro?</h6>
+                                <small class="text-muted">Fatos Verdadeiros ou Falsos, Mitos</small>
                             </div>
                         </div>
                         <div class="card featured-card">
-                            <img src="https://placehold.co/320x180" class="card-img-top" alt="Destaque 3">
+                            <img src="../images/Citação imediata.jpg" class="card-img-top" alt="Citação Imediata">
                             <div class="card-body p-2">
-                                <h6 class="card-title mb-1">Quiz em Destaque 3</h6>
-                                <small class="text-muted">Esportes</small>
+                                <h6 class="card-title mb-1">Citação Imediata</h6>
+                                <small class="text-muted">Filmes, Livros ou Música</small>
                             </div>
                         </div>
                         <div class="card featured-card">
-                            <img src="https://placehold.co/320x180" class="card-img-top" alt="Destaque 4">
+                            <img src="../images/Quiz das Bandeiras e Capitais.jpg" class="card-img-top" alt="Quiz das Bandeiras e Capitais">
                             <div class="card-body p-2">
-                                <h6 class="card-title mb-1">Quiz em Destaque 4</h6>
-                                <small class="text-muted">Entretenimento</small>
+                                <h6 class="card-title mb-1">Quiz das Bandeiras e Capitais</h6>
+                                <small class="text-muted">Geografia Mundial</small>
                             </div>
                         </div>
                         <div class="card featured-card">
-                            <img src="https://placehold.co/320x180" class="card-img-top" alt="Destaque 5">
+                            <img src="../images/Você Sabia que....jpg" class="card-img-top" alt="Você Sabia que...">
                             <div class="card-body p-2">
-                                <h6 class="card-title mb-1">Quiz em Destaque 5</h6>
-                                <small class="text-muted">Curiosidades</small>
+                                <h6 class="card-title mb-1">Você Sabia que...</h6>
+                                <small class="text-muted">Curiosidades e Recordes</small>
+
                             </div>
                         </div>
                     </div>
@@ -143,7 +145,7 @@
                 <!-- Lista de quizzes -->
                 <div class="col-md-4 mb-3 quiz-item" data-name="História Mundial" data-category="História">
                     <div class="card">
-                        <img src="https://placehold.co/640x360" class="card-img-top" alt="História Mundial">
+                        <img src="../images/História Mundial.jpg" class="card-img-top" alt="Teste seus conhecimentos sobre eventos históricos">
                         <div class="card-body">
                             <h5 class="card-title">História Mundial</h5>
                             <p class="card-text">Teste seus conhecimentos sobre eventos históricos.</p>
@@ -153,7 +155,7 @@
                 </div>
                 <div class="col-md-4 mb-3 quiz-item" data-name="Física Básica" data-category="Ciência">
                     <div class="card">
-                        <img src="https://placehold.co/640x360" class="card-img-top" alt="Física Básica">
+                        <img src="../images/Física Básica.jpg" class="card-img-top" alt="Desafie-se com perguntas sobre física.">
                         <div class="card-body">
                             <h5 class="card-title">Física Básica</h5>
                             <p class="card-text">Desafie-se com perguntas sobre física.</p>
@@ -163,7 +165,7 @@
                 </div>
                 <div class="col-md-4 mb-3 quiz-item" data-name="Futebol Mundial" data-category="Esportes">
                     <div class="card">
-                        <img src="https://placehold.co/640x360" class="card-img-top" alt="Futebol Mundial">
+                        <img src="../images/Futebol Mundial.jpg" class="card-img-top" alt="Quanto você sabe sobre futebol?">
                         <div class="card-body">
                             <h5 class="card-title">Futebol Mundial</h5>
                             <p class="card-text">Quanto você sabe sobre futebol?</p>
