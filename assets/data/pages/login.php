@@ -1,3 +1,45 @@
+<?php
+error_reporting(E_ALL); 
+ini_set('display_errors', 1); 
+
+include '../../../conexao.php'; 
+
+$mensagem_erro = "";
+$mensagem_sucesso = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username_input = $_POST['username']; 
+    $password_input = $_POST['password']; 
+
+
+    $stmt = $conexao->prepare("SELECT id, nome, senha_hash FROM usuarios WHERE nome = ?");
+    $stmt->bind_param("s", $username_input);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+
+    if ($resultado->num_rows == 1) {
+        $linha = $resultado->fetch_assoc();
+
+        if (password_verify($password_input, $linha['senha_hash'])) { 
+            $mensagem_sucesso = "Login realizado com sucesso!";
+            session_start();
+            $_SESSION['usuario_id'] = $linha['id'];
+            $_SESSION['usuario_nome'] = $linha['nome']; 
+            
+            
+            header("Location: ./home.php"); 
+            exit();
+        } else {
+            $mensagem_erro = "Senha incorreta.";
+        }
+    } else {
+        $mensagem_erro = "Usuário não encontrado.";
+    }
+    $stmt->close();
+}
+
+$conexao->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +61,19 @@
                 </div>
                 <h2>Entrar</h2>
                 <hr class="divisor">
-                <form action="#" method="POST">
+
+                <?php if ($mensagem_erro): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $mensagem_erro; ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ($mensagem_sucesso): ?>
+                    <div class="alert alert-success" role="alert">
+                        <?php echo $mensagem_sucesso; ?>
+                    </div>
+                <?php endif; ?>
+
+                <form action="login.php" method="POST"> 
                     <div class="mb-3">
                         <label for="username" class="form-label fw-bold">Usuário:</label>
                         <input type="text" class="form-control" id="username" name="username" required>

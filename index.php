@@ -1,3 +1,10 @@
+<?php
+session_start(); // Inicia a sessão para acessar $_SESSION
+
+// Verifica se o usuário está logado
+$is_logged_in = isset($_SESSION['usuario_id']);
+$usuario_nome = $is_logged_in ? $_SESSION['usuario_nome'] : '';
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -18,8 +25,13 @@
                 <h1>TriviaBox</h1>
             </div>
             <div class="auth-buttons">
-                <button type="button" class="btn btn-dark" onclick="location.href='./assets/data/pages/login.php'">Login</button>
-                <button type="button" class="btn btn-primary" onclick="location.href='./assets/data/pages/signup.php'">Sign-up</button>
+                <?php if ($is_logged_in): ?>
+                    <span class="navbar-text me-3">Bem-vindo, <?php echo htmlspecialchars($usuario_nome); ?>!</span>
+                    <button type="button" class="btn btn-dark" onclick="location.href='./assets/data/pages/logout.php'">Sair</button>
+                <?php else: ?>
+                    <button type="button" class="btn btn-dark" onclick="location.href='./assets/data/pages/login.php'">Login</button>
+                    <button type="button" class="btn btn-primary" onclick="location.href='./assets/data/pages/signup.php'">Sign-up</button>
+                <?php endif; ?>
             </div>
         </header>
         <div id="LandingCarousel" class="carousel slide w-100" data-bs-ride="carousel">
@@ -29,7 +41,7 @@
                     <h5>Compita com amigos, suba nos placares de líderes e prove seu conhecimento em milhares de tópicos. De curiosidades a quebra-cabeças, temos tudo!</h5>
                 </div>
                 <div class="carousel-item active z-0">
-                    <img src="https://placehold.co/1920x1080" class="caroussel_img d-block" alt="...">
+                    <img src="/assets/data/images/fotoindex1.jpg" class="caroussel_img d-block" alt="...">
                 </div>
                 <div class="carousel-item z-0">
                     <img src="https://placehold.co/1920x1080" class="caroussel_img d-block" alt="...">
@@ -104,27 +116,21 @@
         <footer class="bg-dark text-center text-white">
             <div class="container p-4 pb-0">
                 <section class="mb-4">
-                    <!-- Facebook -->
                     <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <!-- Twitter -->
                     <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <!-- Google -->
                     <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
                         <i class="fab fa-google"></i>
                     </a>
-                    <!-- Instagram -->
                     <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <!-- Linkedin -->
                     <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                    <!-- Github -->
                     <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
                         <i class="fab fa-github"></i>
                     </a>

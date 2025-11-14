@@ -1,3 +1,61 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+include '../../../conexao.php'; 
+
+$mensagem_erro = "";
+$mensagem_sucesso = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $novo_usuario_input = $_POST['username'];
+    $novo_email_input = $_POST['email'];    
+    $nova_senha_input = $_POST['password']; 
+    $confirmar_senha_input = $_POST['confirm-password']; 
+
+    if ($nova_senha_input !== $confirmar_senha_input) {
+        $mensagem_erro = "As senhas não coincidem.";
+    } else {
+
+        $senha_hash_para_db = password_hash($nova_senha_input, PASSWORD_DEFAULT);
+
+
+        $stmt_check_user = $conexao->prepare("SELECT id FROM usuarios WHERE nome = ?");
+        $stmt_check_user->bind_param("s", $novo_usuario_input);
+        $stmt_check_user->execute();
+        $resultado_check_user = $stmt_check_user->get_result();
+
+
+        $stmt_check_email = $conexao->prepare("SELECT id FROM usuarios WHERE email = ?");
+        $stmt_check_email->bind_param("s", $novo_email_input);
+        $stmt_check_email->execute();
+        $resultado_check_email = $stmt_check_email->get_result();
+
+        if ($resultado_check_user->num_rows > 0) {
+            $mensagem_erro = "Nome de usuário já existe. Escolha outro.";
+        } elseif ($resultado_check_email->num_rows > 0) {
+            $mensagem_erro = "Este email já está cadastrado. Tente outro.";
+        } else {
+
+            $stmt_insert = $conexao->prepare("INSERT INTO usuarios (nome, email, senha_hash) VALUES (?, ?, ?)");
+    
+            $stmt_insert->bind_param("sss", $novo_usuario_input, $novo_email_input, $senha_hash_para_db);
+
+            if ($stmt_insert->execute()) {
+                $mensagem_sucesso = "Cadastro realizado com sucesso! Faça login.";
+
+            } else {
+                $mensagem_erro = "Erro ao cadastrar: " . $stmt_insert->error;
+            }
+            $stmt_insert->close();
+        }
+        $stmt_check_user->close();
+        $stmt_check_email->close();
+    }
+}
+
+$conexao->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +74,19 @@
             <div class="auth-card">
                 <h2>Crie Sua Conta TriviaBox</h2>
                 <hr class="divisor">
-                <form action="#" method="POST">
+
+                <?php if ($mensagem_erro): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $mensagem_erro; ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ($mensagem_sucesso): ?>
+                    <div class="alert alert-success" role="alert">
+                        <?php echo $mensagem_sucesso; ?>
+                    </div>
+                <?php endif; ?>
+
+                <form action="signup.php" method="POST"> 
                     <div class="mb-3 input-with-icon">
                         <label for="username" class="form-label fw-bold">*Usuário:</label>
                         <input type="text" class="form-control" id="username" name="username" required>

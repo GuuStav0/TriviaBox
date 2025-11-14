@@ -1,5 +1,16 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['usuario_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$nome_do_usuario = $_SESSION['usuario_nome']; 
+
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -17,9 +28,12 @@
             <img src="./../images/LogoBlack.svg" alt="logo_black" class="logo">
             <h1>TriviaBox</h1>
         </div>
-        <div class="auth-buttons">
-            <button type="button" class="btn btn-dark" onclick="location.href='./login.php'">Login</button>
-            <button type="button" class="btn btn-primary" onclick="location.href='./signup.php'">Sign-up</button>
+        <div class="auth-buttons d-flex align-items-center">
+            <span class="navbar-text me-3 fw-bold text-dark">
+                Bem-vindo, <?php echo htmlspecialchars($nome_do_usuario); ?>!
+            </span>
+            
+            <button type="button" class="btn btn-dark" onclick="location.href='./logout.php'">Sair</button>
         </div>
     </header>
     <main>
