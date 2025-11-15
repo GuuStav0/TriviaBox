@@ -237,3 +237,42 @@ body {
 .featured-quizzes .featured-card:active {
   transform: scale(0.98);
 }
+
+.offcanvas .offcanvas-btn {
+  border: 0;
+  background: #0b0b0b;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.08);
+}
+.offcanvas .offcanvas-btn:hover {
+  background: #111;
+  color: #fff;
+}
+.offcanvas .offcanvas-logout {
+  background: #d9534f;
+  color: #fff;
+}
+.offcanvas .offcanvas-logout:hover {
+  background: #c9302c;
+}
+.offcanvas .btn-close {
+  margin: -0.25rem -0.25rem -0.25rem 0;
+}
+
+/* Ensure offcanvas body is column and logout button sticks to bottom */
+#authOffcanvas .offcanvas-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+}
+#authOffcanvas .offcanvas-btn {
+  flex: 0 0 auto;
+}
+#authOffcanvas form {
+  margin-top: auto; /* push the logout form to bottom */
+}
