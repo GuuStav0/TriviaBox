@@ -2,16 +2,16 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-include '../../../conexao.php'; 
+include '../../../conexao.php';
 
 $mensagem_erro = "";
 $mensagem_sucesso = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $novo_usuario_input = $_POST['username'];
-    $novo_email_input = $_POST['email'];    
-    $nova_senha_input = $_POST['password']; 
-    $confirmar_senha_input = $_POST['confirm-password']; 
+    $novo_email_input = $_POST['email'];
+    $nova_senha_input = $_POST['password'];
+    $confirmar_senha_input = $_POST['confirm-password'];
 
     if ($nova_senha_input !== $confirmar_senha_input) {
         $mensagem_erro = "As senhas não coincidem.";
@@ -38,12 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
 
             $stmt_insert = $conexao->prepare("INSERT INTO usuarios (nome, email, senha_hash) VALUES (?, ?, ?)");
-    
+
             $stmt_insert->bind_param("sss", $novo_usuario_input, $novo_email_input, $senha_hash_para_db);
 
             if ($stmt_insert->execute()) {
                 $mensagem_sucesso = "Cadastro realizado com sucesso! Faça login.";
-
             } else {
                 $mensagem_erro = "Erro ao cadastrar: " . $stmt_insert->error;
             }
@@ -86,7 +85,7 @@ $conexao->close();
                     </div>
                 <?php endif; ?>
 
-                <form action="signup.php" method="POST"> 
+                <form action="signup.php" method="POST">
                     <div class="mb-3 input-with-icon">
                         <label for="username" class="form-label fw-bold">*Usuário:</label>
                         <input type="text" class="form-control" id="username" name="username" required>

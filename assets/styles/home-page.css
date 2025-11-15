@@ -238,26 +238,25 @@ body {
   transform: scale(0.98);
 }
 
+/* Offcanvas buttons: border separators, no background, no radius */
 .offcanvas .offcanvas-btn {
-  border: 0;
-  background: #0b0b0b;
-  color: #fff;
+  background: transparent;
+  color: var(--dark-navy);
   padding: 0.75rem 1rem;
-  border-radius: 8px;
+  border-radius: 0;
   width: 100%;
-  text-align: center;
-  box-shadow: 0 6px 18px rgba(2,6,23,0.08);
+  text-align: left;
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+  border-bottom: none;
+  box-shadow: none;
 }
 .offcanvas .offcanvas-btn:hover {
-  background: #111;
-  color: #fff;
+  background: rgba(15, 23, 42, 0.02);
 }
-.offcanvas .offcanvas-logout {
-  background: #d9534f;
-  color: #fff;
-}
-.offcanvas .offcanvas-logout:hover {
-  background: #c9302c;
+/* Ensure the logout button (inside the last child form) shows a bottom border */
+#authOffcanvas .d-grid > :last-child .offcanvas-btn,
+#authOffcanvas .d-grid > :last-child button.offcanvas-btn {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
 }
 .offcanvas .btn-close {
   margin: -0.25rem -0.25rem -0.25rem 0;

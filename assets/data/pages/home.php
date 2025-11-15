@@ -9,6 +9,27 @@ if (!isset($_SESSION['usuario_id'])) {
 $nome_do_usuario = $_SESSION['usuario_nome']; 
 
 ?>
+<?php
+// load quizzes from DB (exclude featured which are static)
+$quizzes = [];
+try {
+    require_once __DIR__ . '/../../../conexao.php';
+    if (isset($conexao) && $conexao instanceof mysqli) {
+        $sql = "SELECT q.id, q.titulo, q.descricao, q.capa, c.nome AS categoria
+                FROM quizzes q
+                LEFT JOIN categorias c ON q.categorias_id = c.id
+                WHERE q.status = 1
+                ORDER BY q.criado_em DESC
+                LIMIT 24";
+        $res = $conexao->query($sql);
+        while ($row = $res->fetch_assoc()) {
+            $quizzes[] = $row;
+        }
+    }
+} catch (Throwable $e) {
+    // ignore DB errors for now; $quizzes stays empty
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -19,52 +40,10 @@ $nome_do_usuario = $_SESSION['usuario_nome'];
     <link rel="stylesheet" href="./../../styles/bootstrap_styles/bootstrap.css">
     <link rel="stylesheet" href="./../../styles/home-page.css">
     <link id="favicon" rel="shortcut icon" href="./../images/LogoWhite.svg" type="image/x-icon">
-    <link rel="stylesheet" href="./../../data/images">
 </head>
 
 <body>
-    <header class="page-header">
-        <div class="logo-container">
-            <img src="./../images/LogoBlack.svg" alt="logo_black" class="logo">
-            <h1>TriviaBox</h1>
-        </div>
-        <div class="auth-buttons d-flex align-items-center">
-            <!-- Desktop / show full welcome dropdown -->
-            <div class="dropdown d-none d-md-block">
-                <a class="nav-link dropdown-toggle text-dark fw-bold p-0 me-3" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Bem-vindo, <?php echo htmlspecialchars($nome_do_usuario); ?>!
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="./profile.php">Perfil</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item text-danger" href="./logout.php">Sair</a></li>
-                </ul>
-            </div>
-
-            <!-- Mobile / hamburger toggler opens right offcanvas -->
-            <div class="d-block d-md-none">
-                <button class="btn btn-outline-secondary p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#authOffcanvas" aria-controls="authOffcanvas">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Offcanvas for mobile auth menu (slides from right) -->
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="authOffcanvas" aria-labelledby="authOffcanvasLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="authOffcanvasLabel">Bem-vindo, <?php echo htmlspecialchars($nome_do_usuario); ?>!</h5>
-            <button type="button" class="btn-close text-reset ms-auto" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="d-grid gap-2">
-                <a class="btn btn-dark offcanvas-btn" href="./profile.php">Perfil</a>
-                <form action="./logout.php" method="post">
-                    <button type="submit" class="btn btn-danger offcanvas-btn offcanvas-logout">Sair</button>
-                </form>
-            </div>
-        </div>
-    </div>
+    <?php include_once './elements/header.php'; ?>
 
     <main>
         <div id="LandingCarousel" class="carousel slide w-100" data-bs-ride="carousel">
@@ -186,37 +165,56 @@ $nome_do_usuario = $_SESSION['usuario_nome'];
                 </div>
             </div>
             <div id="quizList" class="row">
-                <!-- Lista de quizzes -->
-                <div class="col-md-4 mb-3 quiz-item" data-name="História Mundial" data-category="História">
-                    <div class="card">
-                        <img src="../images/História Mundial.jpg" class="card-img-top" alt="Teste seus conhecimentos sobre eventos históricos">
-                        <div class="card-body">
-                            <h5 class="card-title">História Mundial</h5>
-                            <p class="card-text">Teste seus conhecimentos sobre eventos históricos.</p>
-                            <a href="#" class="btn btn-primary">Fazer Quiz</a>
+                <!-- Lista de quizzes (dynamic from DB, excluding featured) -->
+                <?php if (!empty($quizzes)): ?>
+                    <?php foreach ($quizzes as $q):
+                        $title = htmlspecialchars($q['titulo']);
+                        $desc = htmlspecialchars($q['descricao']);
+                        $cat = htmlspecialchars($q['categoria'] ?? '');
+                        $img = $q['capa'] ?? '';
+                        // normalize image path so it resolves from this page (assets/data/pages)
+                        if ($img) {
+                            // placeholder filename stored in DB (special-case)
+                            if ($img === 'placeholder-cover.png') {
+                                $imgSrc = '../images/placeholder-cover.png';
+                            } elseif (strpos($img, '../') === 0) {
+                                $imgSrc = $img;
+                            } elseif (strpos($img, 'http') === 0) {
+                                $imgSrc = $img;
+                            } elseif (strpos($img, 'images/') === 0) {
+                                $imgSrc = '../' . $img;
+                            } elseif (strpos($img, '/') !== false) {
+                                // contains a slash but not images/ or ../ — assume it's a relative path already
+                                $imgSrc = $img;
+                            } else {
+                                // stored as filename only — images are under images/uploads/
+                                $imgSrc = '../images/uploads/' . $img;
+                            }
+                        } else {
+                            $imgSrc = '../images/placeholder-cover.png';
+                        }
+                    ?>
+                    <div class="col-md-4 mb-3 quiz-item" data-name="<?= $title ?>" data-category="<?= $cat ?>">
+                        <div class="card h-100">
+                            <img src="<?= $imgSrc ?>" class="card-img-top" alt="<?= $title ?>">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title"><?= $title ?></h5>
+                                <p class="card-text"><?= $desc ?: 'Sem descrição.' ?></p>
+                                <div class="mt-auto">
+                                    <a href="./quiz.php?id=<?= (int)$q['id'] ?>" class="btn btn-primary">Fazer Quiz</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 mb-3 quiz-item" data-name="Física Básica" data-category="Ciência">
-                    <div class="card">
-                        <img src="../images/Física Básica.jpg" class="card-img-top" alt="Desafie-se com perguntas sobre física.">
-                        <div class="card-body">
-                            <h5 class="card-title">Física Básica</h5>
-                            <p class="card-text">Desafie-se com perguntas sobre física.</p>
-                            <a href="#" class="btn btn-primary">Fazer Quiz</a>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="col-12 text-center mt-4">
+                        <div class="p-4 border rounded bg-light">
+                            <h5>Nenhum quiz disponível</h5>
+                            <p class="mb-0">Ainda não há quizzes publicados. Volte mais tarde ou crie um novo.</p>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 mb-3 quiz-item" data-name="Futebol Mundial" data-category="Esportes">
-                    <div class="card">
-                        <img src="../images/Futebol Mundial.jpg" class="card-img-top" alt="Quanto você sabe sobre futebol?">
-                        <div class="card-body">
-                            <h5 class="card-title">Futebol Mundial</h5>
-                            <p class="card-text">Quanto você sabe sobre futebol?</p>
-                            <a href="#" class="btn btn-primary">Fazer Quiz</a>
-                        </div>
-                    </div>
-                </div>
+                <?php endif; ?>
                 <div id="noResults" class="col-12 text-center mt-4" style="display:none;">
                     <div class="p-4 border rounded bg-light">
                         <h5>Nenhum quiz encontrado</h5>
@@ -232,40 +230,7 @@ $nome_do_usuario = $_SESSION['usuario_nome'];
             </nav>
         </section>
     </main>
-    <footer class="bg-dark text-center text-white">
-        <div class="container p-4 pb-0">
-            <section class="mb-4">
-                <!-- Facebook -->
-                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <!-- Twitter -->
-                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <!-- Google -->
-                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                    <i class="fab fa-google"></i>
-                </a>
-                <!-- Instagram -->
-                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <!-- Linkedin -->
-                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <!-- Github -->
-                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                    <i class="fab fa-github"></i>
-                </a>
-            </section>
-        </div>
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            &#169; 2025 Copyright:
-            <a class="text-white" href="">TriviaBox</a>
-        </div>
-    </footer>
+    <?php include_once './elements/footer.php'; ?>
 </body>
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script src="../../scripts/bootstrap_scripts/bootstrap.bundle.js"></script>
