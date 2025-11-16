@@ -105,6 +105,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (res.ok && json && json.success) {
         wasSuccessful = true;
         showAlert(json.message || 'Quiz criado com sucesso.', 'success');
+        if (json.scores_cleared) {
+          showAlert('Aviso: alterações nas perguntas/respostas zeraram o placar deste quiz.', 'warning');
+        }
         // restore label but keep disabled (not clickable)
         if (submitBtn) {
           submitBtn.innerHTML = submitBtn.dataset.orig || submitBtn.innerHTML;
@@ -139,13 +142,83 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const questions = collectQuestions();
 
-    // Build FormData: start from form to include file inputs (quiz_cover) and regular fields
-    const fd = new FormData(form);
+    // If editing, detect textual changes (question text, options, correct) and warn user that these edits will reset the scoreboard
+    const isEdit = !!form.querySelector('input[name="quiz_id"]');
+    let needsWarn = false;
+    try {
+      const original = window.__ORIGINAL_QUESTIONS__ || null;
+      if (isEdit && Array.isArray(original)) {
+        // normalize current questions (ignore images)
+        const normCurrent = questions.map(q => ({
+          question: (q.question || '').trim(),
+          options: (q.options || []).map(o => (o || '').trim()).slice(0,4).concat(['','','','']).slice(0,4),
+          correct: parseInt(q.correct || 0, 10) || 0
+        }));
+        // normalize original (already server-provided) to ensure consistent ordering
+        const normOrig = original.map(o => ({
+          question: (o.question || '').trim(),
+          options: (o.options || []).map(x => (x||'').trim()).slice(0,4).concat(['','','','']).slice(0,4),
+          correct: parseInt(o.correct || 0, 10) || 0
+        }));
+        // detect differences: length or any textual difference
+        if (normCurrent.length !== normOrig.length) needsWarn = true;
+        else {
+          for (let i = 0; i < normCurrent.length && !needsWarn; i++) {
+            const a = normCurrent[i];
+            const b = normOrig[i];
+            if (a.question !== b.question) { needsWarn = true; break; }
+            for (let j = 0; j < 4; j++) {
+              if ((a.options[j] || '') !== (b.options[j] || '')) { needsWarn = true; break; }
+            }
+            if (a.correct !== b.correct) { needsWarn = true; break; }
+          }
+        }
+      }
+    } catch (err) { console.warn('Could not compute edit-diff', err); }
 
-    // Append questions JSON without DOM elements
+    if (isEdit && needsWarn) {
+      const modalEl = document.getElementById('editWarningModal');
+      if (modalEl && typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+        // show Bootstrap modal and wait for user confirmation
+        const editModal = new bootstrap.Modal(modalEl, { backdrop: 'static', keyboard: false });
+        const continueBtn = document.getElementById('editWarnContinue');
+        // attach one-time handler
+        const onContinue = () => {
+          continueBtn.removeEventListener('click', onContinue);
+          editModal.hide();
+          // Re-collect current questions and build FormData now (so it reflects any last edits)
+          const currentQuestions = collectQuestions();
+          const fd2 = new FormData(form);
+          // Ensure category is explicitly set (hidden input should exist, but set explicitly to be safe)
+          const catEl = document.getElementById('quiz_category');
+          if (catEl) fd2.set('categoria_id', catEl.value || '');
+          const questionsForJson2 = currentQuestions.map(q => ({ question: q.question, options: q.options, correct: q.correct }));
+          fd2.set('questions_json', JSON.stringify(questionsForJson2));
+          // Append question images
+          currentQuestions.forEach((q, i) => {
+            if (q._fileInputElement && q._fileInputElement.files && q._fileInputElement.files[0]) {
+              fd2.append(`question_image_${i}`, q._fileInputElement.files[0]);
+            }
+          });
+          submitForm(fd2);
+        };
+        continueBtn.addEventListener('click', onContinue);
+        editModal.show();
+        return; // submission will happen from modal
+      } else {
+        // fallback to confirm
+        const proceed = confirm('Atenção: editar o texto da pergunta, das opções ou alterar a resposta correta irá zerar o placar deste quiz. Alterar apenas imagens NÃO afeta o placar. Deseja continuar?');
+        if (!proceed) return;
+      }
+    }
+
+    // Build FormData now (no modal or modal was not needed)
+    const fd = new FormData(form);
+    // Ensure category explicitly present
+    const catEl = document.getElementById('quiz_category');
+    if (catEl) fd.set('categoria_id', catEl.value || '');
     const questionsForJson = questions.map(q => ({ question: q.question, options: q.options, correct: q.correct }));
     fd.set('questions_json', JSON.stringify(questionsForJson));
-
     // Append each question image file (if any) with a predictable key
     questions.forEach((q, i) => {
       if (q._fileInputElement && q._fileInputElement.files && q._fileInputElement.files[0]) {

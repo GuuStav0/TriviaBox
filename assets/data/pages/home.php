@@ -15,15 +15,18 @@ $quizzes = [];
 try {
     require_once __DIR__ . '/../../../conexao.php';
     if (isset($conexao) && $conexao instanceof mysqli) {
-        $sql = "SELECT q.id, q.titulo, q.descricao, q.capa, c.nome AS categoria
-                FROM quizzes q
-                LEFT JOIN categorias c ON q.categorias_id = c.id
-                WHERE q.status = 1
-                ORDER BY q.criado_em DESC
-                LIMIT 24";
+        $sql = "SELECT q.id, q.titulo, q.descricao, q.capa, c.nome AS categoria, u.nome AS criador_nome
+            FROM quizzes q
+            LEFT JOIN categorias c ON q.categorias_id = c.id
+            LEFT JOIN usuarios u ON q.criador_id = u.id
+            WHERE q.status = 1
+            ORDER BY q.criado_em DESC
+            LIMIT 24";
         $res = $conexao->query($sql);
         while ($row = $res->fetch_assoc()) {
-            $quizzes[] = $row;
+            // normalize keys
+            $row['criador_nome'] = $row['criador_nome'] ?? '';
+                        $quizzes[] = $row;
         }
     }
 } catch (Throwable $e) {
@@ -200,8 +203,11 @@ try {
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title"><?= $title ?></h5>
                                 <p class="card-text"><?= $desc ?: 'Sem descrição.' ?></p>
+                                <?php if (!empty($q['criador_nome'])): ?>
+                                    <div class="mb-2 small text-muted">Criado por: <strong><?= htmlspecialchars($q['criador_nome']) ?></strong></div>
+                                <?php endif; ?>
                                 <div class="mt-auto">
-                                    <a href="./quiz.php?id=<?= (int)$q['id'] ?>" class="btn btn-primary">Fazer Quiz</a>
+                                    <a href="./trivia.php?id=<?= (int)$q['id'] ?>" class="btn btn-primary">Fazer Quiz</a>
                                 </div>
                             </div>
                         </div>
