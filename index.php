@@ -4,6 +4,8 @@ session_start(); // Inicia a sessão para acessar $_SESSION
 // Verifica se o usuário está logado
 $is_logged_in = isset($_SESSION['usuario_id']);
 $usuario_nome = $is_logged_in ? $_SESSION['usuario_nome'] : '';
+// make variable expected by header template
+$nome_do_usuario = $usuario_nome;
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -24,16 +26,49 @@ $usuario_nome = $is_logged_in ? $_SESSION['usuario_nome'] : '';
                 <img src="./assets/data/images/LogoBlack.svg" alt="logo_black" class="logo">
                 <h1>TriviaBox</h1>
             </div>
-            <div class="auth-buttons">
-                <?php if ($is_logged_in): ?>
-                    <span class="navbar-text me-3">Bem-vindo, <?php echo htmlspecialchars($usuario_nome); ?>!</span>
-                    <button type="button" class="btn btn-dark" onclick="location.href='./assets/data/pages/logout.php'">Sair</button>
-                <?php else: ?>
-                    <button type="button" class="btn btn-dark" onclick="location.href='./assets/data/pages/login.php'">Login</button>
-                    <button type="button" class="btn btn-primary" onclick="location.href='./assets/data/pages/signup.php'">Sign-up</button>
-                <?php endif; ?>
+            <div class="auth-buttons d-flex align-items-center">
+                <!-- Desktop / show full welcome dropdown -->
+                <div class="dropdown d-none d-md-block">
+                    <a class="nav-link dropdown-toggle text-dark fw-bold p-0 me-3" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Bem-vindo, <?php echo htmlspecialchars($nome_do_usuario); ?>!
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="./assets/data/pages/home.php">Início</a></li>
+                        <li><a class="dropdown-item" href="./assets/data/pages/profile.php">Perfil</a></li>
+                        <li><a class="dropdown-item" href="./assets/data/pages/create_quiz.php">Criar Quiz</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item text-danger" href="./assets/data/pages/logout.php">Sair</a></li>
+                    </ul>
+                </div>
+
+                <!-- Mobile / hamburger toggler opens right offcanvas -->
+                <div class="d-block d-md-none">
+                    <button class="btn btn-outline-secondary p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#authOffcanvas" aria-controls="authOffcanvas">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
             </div>
         </header>
+
+        <!-- Offcanvas for mobile auth menu (slides from right) -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="authOffcanvas" aria-labelledby="authOffcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="authOffcanvasLabel">Bem-vindo, <?php echo htmlspecialchars($nome_do_usuario); ?>!</h5>
+                <button type="button" class="btn-close text-reset ms-auto" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="d-grid gap-2">
+                    <a class="btn btn-primary offcanvas-btn" href="./assets/data/pages/home.php">Início</a>
+                    <a class="btn btn-primary offcanvas-btn" href="./assets/data/pages/profile.php">Perfil</a>
+                    <a class="btn btn-primary offcanvas-btn" href="./assets/data/pages/create_quiz.php">Criar Quiz</a>
+                    <form action="./assets/data/pages/logout.php" method="post">
+                        <button type="submit" class="btn btn-danger offcanvas-btn offcanvas-logout">Sair</button>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div id="LandingCarousel" class="carousel slide w-100" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="caroussel-text z-1">
@@ -41,13 +76,13 @@ $usuario_nome = $is_logged_in ? $_SESSION['usuario_nome'] : '';
                     <h5>Compita com amigos, suba nos placares de líderes e prove seu conhecimento em milhares de tópicos. De curiosidades a quebra-cabeças, temos tudo!</h5>
                 </div>
                 <div class="carousel-item active z-0">
-                    <img src="/assets/data/images/fotoindex1.jpg" class="caroussel_img d-block" alt="...">
+                    <img src="./assets/data/images/Tecnologia.jpg" class="caroussel_img d-block" alt="...">
                 </div>
                 <div class="carousel-item z-0">
-                    <img src="https://placehold.co/1920x1080" class="caroussel_img d-block" alt="...">
+                    <img src="./assets/data/images/Sabedoria e Conhecimento Clássico.jpg" class="caroussel_img d-block" alt="...">
                 </div>
                 <div class="carousel-item z-0">
-                    <img src="https://placehold.co/1920x1080" class="caroussel_img d-block" alt="...">
+                    <img src="./assets/data/images/Desafio do Conhecimento.jpg" class="caroussel_img d-block" alt="...">
                 </div>
             </div>
         </div>
