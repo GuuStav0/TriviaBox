@@ -1,0 +1,215 @@
+:root {
+  /* Mantém as variáveis de cor consistentes */
+  --snow-white: #f6f8ff;
+  --dark-navy: #062241;
+  --slate-gray: #475569;
+  --blue-sky: #2b6df6;
+  --light-blue: #85c1ff;
+  --dark-blue: #213a9b;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: sans-serif, Arial;
+}
+
+/* * 0. Estilos de Cabeçalho (RESTURADOS) */
+.page-header {
+  width: 100%;
+  /* Reajustado para ser um valor fixo, comum em cabeçalhos */
+  height: auto; 
+  padding: 15px;
+  background-color: var(--snow-white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(11, 36, 65, 0.04);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  pointer-events: none;
+}
+.logo {
+  height: 50px;
+}
+
+.page-header h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  padding: 0;
+  margin: 0;
+  color: var(--dark-navy);
+}
+
+
+/* * 1. Estilização Global
+ * Usando o gradiente principal
+ */
+body {
+  background: linear-gradient(
+    180deg,
+    var(--light-blue) 0%,
+    var(--blue-sky) 50%,
+    var(--dark-blue) 100%
+  );
+  min-height: 100vh;
+  font-family: sans-serif, Arial; 
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* * 2. Layout Principal */
+.profile-content {
+  padding: 3rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+/* * 3. Card do Perfil */
+.profile-card {
+  background: var(--snow-white);
+  border-radius: 12px;
+  box-shadow: 0 12px 36px rgba(11, 36, 65, 0.08);
+  padding: 2.5rem;
+  max-width: 800px; 
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--blue-sky); 
+  margin: 0 auto 1.5rem;
+  display: block;
+}
+
+.profile-username {
+  color: var(--dark-navy);
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.profile-member-since {
+  color: var(--slate-gray);
+  font-size: 0.95rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* * 4. Divisor estilizado */
+.divisor {
+  margin: 0 0 1.5rem 0;
+  padding: 0;
+  border: none;
+  height: 2px;
+  width: 10%; 
+  background-color: var(--blue-sky);
+  opacity: 1;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* * 5. Seção de Estatísticas */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+.stat-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 1.25rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(11, 36, 65, 0.04);
+}
+.stat-value {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--blue-sky);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--slate-gray);
+  margin-top: 0.4rem;
+}
+
+/* * 6. Elementos de Formulário (Ícone de Senha) */
+.profile-card .input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.profile-card .input-with-icon .form-control {
+    padding-left: 3rem; 
+    flex-grow: 1;
+    position: static;
+}
+.profile-card .input-toggle {
+  position: absolute; 
+  top: 0 !important; 
+  bottom: 0 !important;
+  margin: auto !important;
+  left: 0.5rem;
+  z-index: 20;
+  transform: none !important; 
+  
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  cursor: pointer;
+  color: #6b7280;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0;
+  box-shadow: none !important;
+}
+
+/* * 7. Estilo dos Cards de Quizzes Recentes */
+.card-img-top {
+  height: 120px;
+  object-fit: cover;
+}
+.card-body .card-title {
+    color: var(--dark-navy);
+    font-weight: 600;
+}
+.card-body {
+    padding: 0.75rem;
+}
+
+
+/* * 8. Responsividade */
+@media (max-width: 768px) {
+    .profile-card .col-md-9 .text-md-start {
+        text-align: center !important;
+    }
+}
+@media (max-width: 576px) {
+  .profile-card {
+    padding: 1.5rem;
+  }
+  .profile-username {
+    font-size: 1.5rem;
+  }
+  .stats-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+  }
+}

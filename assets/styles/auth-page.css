@@ -17,7 +17,7 @@
   font-family: sans-serif, Arial;
 }
 
-body.auth-page {
+body {
   background: linear-gradient(
     180deg,
     var(--light-blue) 0%,
